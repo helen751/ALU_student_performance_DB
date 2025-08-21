@@ -13,24 +13,26 @@ CREATE TABLE students (
 
 -- creating the linux grade table that stores the linux course grades of all students present in the students table
 CREATE TABLE linux_grades (
-    course_id VARCHAR(8) PRIMARY KEY,              -- Unique ID for the course, limited to 8 characters
+    course_id VARCHAR(10) default 'Lin2025-01',              -- Unique ID for the course set at default
     course_name VARCHAR(50) DEFAULT 'Linux',     -- course name, default "Linux"
     student_id INT,                              -- Foreign Key referencing students ID
     -- student grade with CHECK constraint, limited to numbers from 0-100
     grade_obtained INT CHECK (grade_obtained BETWEEN 0 AND 100),
 
+    PRIMARY KEY (course_id, student_id),         -- ensures one grade per student per course
     -- creating the relationship, referencing the student_id in this table to the student_id in students table
     FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
 
 -- creating the python grades table to store records of all students python grades
 CREATE TABLE python_grades (
-    course_id VARCHAR(8) PRIMARY KEY,              -- Unique ID for the course, limited to 8 characters
+    course_id VARCHAR(10) default 'Pyt2025-01',              -- Unique ID for the course set at default
     course_name VARCHAR(50) DEFAULT 'Python',     -- course name, default "Python"
     student_id INT,                              -- Foreign Key referencing students ID
     -- student grade with CHECK constraint, limited to numbers from 0-100
     grade_obtained INT CHECK (grade_obtained BETWEEN 0 AND 100),
 
+    PRIMARY KEY (course_id, student_id),         -- ensures one grade per student per course
     -- creating the relationship, referencing the student_id in this table to the student_id in students table
     FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
