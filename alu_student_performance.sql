@@ -37,6 +37,40 @@ CREATE TABLE python_grades (
     FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
 
+INSERT INTO students (student_name, intake_year) VALUES
+('Helen Okereke', 2025),
+('Grace Karimi Njunge', 2025),
+('Cindy Saro Teta', 2025),
+('Erioluwa Mercy Akintayo', 2025),
+('Bendou Janna Vitalina', 2025),
+('Shyaka Francis', 2025),
+('Kevin Muriithi', 2025),
+('Martha Nansubuga', 2025),
+('Tawanda Chikore', 2025),
+('Aisha Abdalla', 2025),
+('Jean Bosco Habimana', 2025),
+('Sarah Kwizera', 2025),
+('Daniel Okoth', 2025),
+('Fatoumata Diallo', 2025),
+('Peter Mugisha', 2025);
+
+INSERT INTO python_grades (student_id, grade_obtained) VALUES
+(1, 91),
+(2, 86),
+(3, 79),
+(4, 88),
+(5, 77),
+(6, 94),
+(7, 82),
+(8, 73),
+(9, 65),
+(10, 97),
+(11, 84),
+(12, 90),
+(13, 69),
+(14, 72),
+(15, 89);
+
 select * from students;
 select * from linux_grades;
 select * from python_grades;
