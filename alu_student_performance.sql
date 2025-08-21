@@ -26,8 +26,8 @@ CREATE TABLE linux_grades (
 
 -- creating the python grades table to store records of all students python grades
 CREATE TABLE python_grades (
-    course_id VARCHAR(10) default 'Pyt2025-01',              -- Unique ID for the course set at default
-    course_name VARCHAR(50) DEFAULT 'Python',     -- course name, default "Python"
+    course_id VARCHAR(10) default 'Pyt2025-01',  -- Unique ID for the course set at default
+    course_name VARCHAR(50) DEFAULT 'Python',    -- course name, default "Python"
     student_id INT,                              -- Foreign Key referencing students ID
     -- student grade with CHECK constraint, limited to numbers from 0-100
     grade_obtained INT CHECK (grade_obtained BETWEEN 0 AND 100),
