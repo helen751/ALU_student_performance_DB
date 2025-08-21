@@ -26,7 +26,6 @@ class db_connect():
             )
             #print this, if successful
             if connection.is_connected():
-                print("Connection established")
                 return connection
 
         except Error as e:
@@ -38,5 +37,3 @@ class db_connect():
         if connection.is_connected():
             connection.close()
 
-connection = db_connect()
-connection.connect_to_db()
