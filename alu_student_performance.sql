@@ -13,7 +13,7 @@ CREATE TABLE students (
 
 -- creating the linux grade table that stores the linux course grades of all students present in the students table
 CREATE TABLE linux_grades (
-    course_id VARCHAR(10) default 'Lin2025-01',              -- Unique ID for the course set at default
+    course_id VARCHAR(10) default 'Lin2025-01',  -- Unique ID for the course set at default
     course_name VARCHAR(50) DEFAULT 'Linux',     -- course name, default "Linux"
     student_id INT,                              -- Foreign Key referencing students ID
     -- student grade with CHECK constraint, limited to numbers from 0-100
@@ -37,18 +37,85 @@ CREATE TABLE python_grades (
     FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
 
+-- QUERY1
+-- Adding sample data of 20 students
+INSERT INTO students (student_name, intake_year) VALUES
+('Helen Okereke', 2025),
+('Grace Karimi Njunge', 2025),
+('Cindy Saro Teta', 2025),
+('Erioluwa Mercy Akintayo', 2025),
+('Bendou Janna Vitalina', 2025),
+('Shyaka Francis', 2025),
+('Kevin Muriithi', 2023),
+('Martha Nansubuga', 2024),
+('Tawanda Chikore', 2025),
+('Aisha Abdalla', 2025),
+('Jean Bosco Habimana', 2024),
+('Sarah Kwizera', 2023),
+('Daniel Okoth', 2024),
+('Fatoumata Diallo', 2025),
+('Peter Mugisha', 2023),
+('John Akindore', 2022),
+('Favour Lovelace', 2023),
+('Mary Nyabuge', 2024),
+('Iradukunda Gaelle', 2025),
+('Chinonso Wisdon Uche', 2023);
 
+-- Adding the records of the student's Linux Grades
+INSERT INTO linux_grades (student_id, grade_obtained) VALUES
+(1, 85),
+(2, 90),
+(3, 15),
+(4, 92),
+(5, 80),
+(6, 88),
+(7, 75),
+(8, 83),
+(9, 20),
+(10, 95),
+(11, 30),
+(12, 89),
+(13, 81),
+(14, 67),
+(15, 100);
+
+-- Adding the records of 15 students who took the Python course.
+INSERT INTO python_grades (student_id, grade_obtained) VALUES
+(16, 45),
+(2, 100),
+(3, 78),
+(4, 22),
+(17, 60),
+(6, 65),
+(9, 75),
+(8, 83),
+(19, 70),
+(10, 30),
+(11, 76),
+(18, 29),
+(13, 81),
+(14, 67),
+(20, 78);
+
+-- Viewing all the tables created in the database and their records
 select * from students;
 select * from linux_grades;
 select * from python_grades;
+
+
+-- Query 2
+-- Find the students who scored less than 50% in the Linux course
+SELECT s.student_id, s.student_name, l.course_name, l.grade_obtained
+FROM students s
+JOIN linux_grades l ON s.student_id = l.student_id
+WHERE l.grade_obtained < 50;
+
 #Query 3: Find students who took only one course (either Linux or Python, not both).
 SELECT s.student_id, s.student_name, 'Linux Only' AS course_status
 FROM students s
 JOIN linux_grades l ON s.student_id = l.student_id
 WHERE s.student_id NOT IN (SELECT student_id FROM python_grades)
-
 UNION
-
 SELECT s.student_id, s.student_name, 'Python Only' AS course_status
 FROM students s
 JOIN python_grades p ON s.student_id = p.student_id
@@ -59,3 +126,21 @@ SELECT DISTINCT s.student_id, s.student_name
 FROM students s
 JOIN linux_grades l ON s.student_id = l.student_id
 JOIN python_grades p ON s.student_id = p.student_id;
+
+-- QUERY 5: calculate average linux and python grades side by side
+SELECT
+
+(SELECT round(AVG(grade_obtained),2) FROM linux_grades) AS linux_avg,
+(SELECT round(AVG(grade_obtained),2) FROM python_grades) AS python_avg;
+
+-- QUERY 6: Finding the top student in the class across Linux and Python courses based on the average
+SELECT
+    s.student_id, s.student_name,
+    lg.grade_obtained AS linux_grade, pg.grade_obtained AS python_grade, /*linux and python grades with aliases*/
+    ROUND((lg.grade_obtained + pg.grade_obtained)/2, 2) AS average_grade /*calculating the average grade and rounding to two decimal places */
+FROM students s
+-- join ensures that only students with both linux and python grades are included
+JOIN linux_grades lg ON s.student_id = lg.student_id  /*adding of linux grades to each student based on their student id*/
+JOIN python_grades pg ON s.student_id = pg.student_id /*adding of python grades to each student based on their student id*/
+ORDER BY average_grade DESC  /*Arranges students from highest to lowest*/
+LIMIT 1; -- Limits the list to only the top student
