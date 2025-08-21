@@ -11,8 +11,8 @@ class db_connect():
         self.database = "ALU_student_performance_DB"
         self.user = "avnadmin"
         self.password = "AVNS_dy3dbngTIiRnVYkeqQu"
-        self.ssl_ca = r"C:\Users\san\Desktop\ALU_student_performance_DB\ca.pem"
-        
+
+
     #function to establish the database connection
     def connect_to_db(self):
         try:
@@ -22,7 +22,7 @@ class db_connect():
                 database = self.database,
                 user = self.user,
                 password = self.password,
-                ssl_ca = self.ssl_ca
+                
             )
             #print this, if successful
             if connection.is_connected():
